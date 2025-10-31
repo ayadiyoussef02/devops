@@ -19,6 +19,10 @@ public class UserRestControl {
 	@Autowired
 	IUserService userService;
 
+	// 🚨 Fake secret for Gitleaks test (ne jamais utiliser en prod)
+	String awsSecretKey = "AKIA1234567890FAKEKEY";
+
+
 	@GetMapping("/retrieve-all-users")
 	public List<User> retrieveAllUsers() {
 		return userService.retrieveAllUsers();

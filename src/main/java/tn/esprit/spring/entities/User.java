@@ -14,8 +14,6 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-
-
 @Entity
 @Table(name = "T_USER")
 public class User implements Serializable {
@@ -27,8 +25,7 @@ public class User implements Serializable {
 	@GeneratedValue (strategy = GenerationType.IDENTITY)
 	private Long id;   
 	
-	private String firstName;
-	private String APIKEY = "0123456789abcdef0123456789abcdef";
+	private String firstName; 
 
 	private String lastName;
 	

@@ -1,9 +1,6 @@
 package tn.esprit.spring.control;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,62 +9,50 @@ import org.springframework.web.bind.annotation.*;
 import tn.esprit.spring.entities.User;
 import tn.esprit.spring.services.IUserService;
 
-@RestController
+// userRestControl
+@RestController // = @Controller + @ResponseBody
 @RequestMapping("/user")
 public class UserRestControl {
 
 	@Autowired
 	IUserService userService;
 
+
+	// URL : http://localhost:????/????/????/retrieve-all-users
 	@GetMapping("/retrieve-all-users")
 	public List<User> retrieveAllUsers() {
 		return userService.retrieveAllUsers();
+		//return list;
 	}
 
+	// http://localhost:????/timesheet-devops/retrieve-user/{user-id}
 	@GetMapping("/retrieve-user/{user-id}")
 	public User retrieveUser(@PathVariable("user-id") String userId) {
 		return userService.retrieveUser(userId);
 	}
 
+
+
+	// Ajouter User : http://localhost:????/timesheet-devops/add-user
 	@PostMapping("/add-user")
 	public User addUser(@RequestBody User u) {
 		User user = userService.addUser(u);
 		return user;
 	}
 
+
+	// Supprimer User :
+	// http://localhost:????/timesheet-devops/remove-user/{user-id}
 	@DeleteMapping("/remove-user/{user-id}")
 	public void removeUser(@PathVariable("user-id") String userId) {
 		userService.deleteUser(userId);
 	}
 
+	// Modifier User
+	// http://localhost:????/timesheet-devops/modify-user
 	@PutMapping("/modify-user")
 	public User updateUser(@RequestBody User user) {
 		return userService.updateUser(user);
 	}
 
-	// 🚨 Vulnérabilité volontaire pour test DevSecOps (Injection SQL)
-	// URL : http://localhost:8080/user/unsafe-login?username=admin'--&password=anything
-	@GetMapping("/unsafe-login")
-	public String unsafeLogin(@RequestParam String username, @RequestParam String password) {
-		String result = "Utilisateur non trouvé";
-		try {
-			// Mauvaise pratique : concaténation directe de variables dans la requête SQL
-			Connection conn = DriverManager.getConnection("jdbc:h2:mem:testdb", "sa", "");
-			Statement stmt = conn.createStatement();
-			ResultSet rs = stmt.executeQuery(
-					"SELECT * FROM USERS WHERE username='" + username + "' AND password='" + password + "'"
-			);
-
-			if (rs.next()) {
-				result = "Connexion réussie pour " + username;
-			}
-
-			rs.close();
-			stmt.close();
-			conn.close();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return result;
-	}
 }

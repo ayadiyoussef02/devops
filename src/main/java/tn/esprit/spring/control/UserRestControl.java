@@ -21,6 +21,12 @@ public class UserRestControl {
 
 	// 🚨 Fake secret for Gitleaks test (ne jamais utiliser en prod)
 	String awsSecretKey = "AKIA1234567890FAKEKEY";
+	// Fake AWS key (détectable par Gitleaks)
+	String aws_access_key = "AKIAIOSFODNN7EXAMPLE";
+	String aws_secret_key = "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY";
+	String github_token = "ghp_FAKEEXAMPLEKEY123456789abcdefghij";
+
+
 
 
 	@GetMapping("/retrieve-all-users")

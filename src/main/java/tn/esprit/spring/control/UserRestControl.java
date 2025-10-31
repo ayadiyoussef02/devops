@@ -25,6 +25,7 @@ public class UserRestControl {
 	String aws_access_key = "AKIAIOSFODNN7EXAMPLE";
 	String aws_secret_key = "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY";
 	String github_token = "ghp_FAKEEXAMPLEKEY123456789abcdefghij";
+	String github_token1 = "ghp_FAKEKEY1234567890abcdefghijklmnopqrstuvwxyz";
 
 
 

@@ -14,6 +14,15 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+/*
+//vun import
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.Base64;
+import java.util.Random;
+
+ */
+
 @Entity
 @Table(name = "T_USER")
 public class User implements Serializable {
@@ -91,9 +100,43 @@ public class User implements Serializable {
 
 
 
-
+/*
 	//vun integrate the code here
 
+// === BEGIN Sonar-triggering demo code ===
+
+	// S2068: hard-coded credentials / secrets
+	private static final String PASSWORD = "P@ssw0rd!";      // flagged as hard-coded credential
+	private static final String API_SECRET = "sk_live_ABC";  // flagged as hard-coded secret
+
+	// S4790: weak hash algorithm (MD5) used for security
+	public String md5OfLastName() {
+		try {
+			MessageDigest md = MessageDigest.getInstance("MD5");  // weak hash
+			byte[] digest = md.digest(
+					(lastName == null ? "" : lastName).getBytes()
+			);
+			return Base64.getEncoder().encodeToString(digest);
+		} catch (NoSuchAlgorithmException e) {
+			return "";
+		}
+	}
+
+	// S2245: predictable PRNG used for security token
+	public String insecureActivationToken() {
+		Random r = new Random(); // predictable PRNG
+		byte[] buf = new byte[16];
+		r.nextBytes(buf);
+		return Base64.getEncoder().encodeToString(buf);
+	}
+
+	// S2077 / S3649 hotspot: dynamically formatted SQL (risk of SQLi if used)
+// This just builds the string; if you actually execute it with JDBC/EntityManager,
+// Sonar will raise the hotspot where it’s used.
+	public String buildFindByNameQuery(String name) {
+		return "SELECT id FROM T_USER WHERE firstName = '" + name + "'";
+	}
+// === END Sonar-triggering demo code ===*/
 
 
 }
